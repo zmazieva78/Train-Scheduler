@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Train Schedule</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
+        <link href="https://fonts.googleapis.com/css?family=Patua+One" rel="stylesheet">
+        <style>
+        h1 {
+            text-align: center;
+            font-size: 48px;
+            color: aliceblue;
+            font-weight: 700;
+        }
+        .jumbotron {
+            background-color: rgb(10, 124, 153);
+        }
+        .card-header {
+            background-color: rgb(10, 124, 153);
+            color: aliceblue;
+            font-weight: 700;
+        }
+        .card-body {
+            border: solid;
+            border-width: 3px;
+            border-color:  rgb(10, 124, 153);
+        }
+        body {
+            font-family: 'Patua One', cursive;
+        }
+        th {
+            margin: 1% 1% 0 1%;
+            width: 1%;
+            text-align: center;
+        }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div class="jumbotron"><h1>Seattle Train Schedule</h1></div>
+
+            <div class="card">
+                <div class="card-header">Train Schedule</div>
+                <div class="card-body">
+                    <div id="train-schedule">                           
+                        <table class="table" id="train-table">
+                            <tr>
+                                <th scope="col" id="train-name">Train Name</th>
+                                <th scope="col" id="destination">Destination</th>
+                                <th scope="col" id="times">Frequency</th>
+                                <th scope="col" id="times">Next Arrival</th>
+                                <th scope="col" id="times">Minutes Away</th>
+                                <th scope="col" id="delete">Delete</th>
+                            </tr>
+                                <tbody id="table-data"></tbody>
+                        </table>                    
+                    </div>
+                </div>                
+            </div>
+
+            <div class="card">
+                    <div class="card-header">Add Train</div>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="search-input">Train Name</label>
+                                <input type="text" class="form-control" id="train-name-input" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label for="records-input">Distanation</label>
+                                <input type="text" class="form-control" id="distanation-input" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label for="time-input">Time Input</label>
+                                <input type="text" class="form-control" id="time-input" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label for="frequency-input">Frequency</label>
+                                <input type="text" class="form-control" id="time-input" placeholder="">
+                            </div>
+                            <button id="add-button" type="submit" class="btn btn-primary">Add</button>
+                       </form>
+                   </div>
+               </div>
+        </div>
+       
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+        <script type="text/javascript">
+
+            var config = {
+                apiKey: "AIzaSyAeQ-LUwpHvgfmAMTH5twAPmeD82cIh_l0",
+                authDomain: "trainscheduler-1bc22.firebaseapp.com",
+                databaseURL: "https://trainscheduler-1bc22.firebaseio.com",
+                projectId: "trainscheduler-1bc22",
+                storageBucket: "trainscheduler-1bc22.appspot.com",
+                messagingSenderId: "1049638381051"
+            };
+            firebase.initializeApp(config);
+
+
+
+
+
+        </script>
+
+    </body>
+</html>
