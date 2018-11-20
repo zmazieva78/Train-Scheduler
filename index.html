@@ -3,7 +3,15 @@
     <head>
         <meta charset="utf-8">
         <title>Train Schedule</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
+        <!-- jQuery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <!-- Bootstrap CDN-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+        <!-- Firebase Reference -->
+        <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Patua+One" rel="stylesheet">
         <style>
         h1 {
@@ -28,10 +36,13 @@
         body {
             font-family: 'Patua One', cursive;
         }
-        th {
+        th, td {
             margin: 1% 1% 0 1%;
             width: 1%;
             text-align: center;
+        }
+        #train-time-input, #train-frequency-input {
+            width: 25%;
         }
         </style>
     </head>
@@ -39,21 +50,23 @@
     <body>
         <div class="container">
 
-            <div class="jumbotron"><h1>Seattle Train Schedule</h1></div>
+            <div class="jumbotron"><h1>NorthWest Train Schedule</h1></div>
 
             <div class="card">
                 <div class="card-header">Train Schedule</div>
                 <div class="card-body">
                     <div id="train-schedule">                           
                         <table class="table" id="train-table">
-                            <tr>
-                                <th scope="col" id="train-name">Train Name</th>
-                                <th scope="col" id="destination">Destination</th>
-                                <th scope="col" id="times">Frequency</th>
-                                <th scope="col" id="times">Next Arrival</th>
-                                <th scope="col" id="times">Minutes Away</th>
-                                <th scope="col" id="delete">Delete</th>
-                            </tr>
+                            <thead>
+                                <tr>
+                                    <th scope="col" id="name">Train Name</th>
+                                    <th scope="col" id="destination">Destination</th>
+                                    <th scope="col" id="time">Next Arrival</th>
+                                    <th scope="col" id="friquency">Frequency (minutes)</th>
+                                    <th scope="col" id="away">Minutes Away</th>
+                                    <th scope="col" id="delete">Delete</th>
+                                </tr>
+                            </thead>
                                 <tbody id="table-data"></tbody>
                         </table>                    
                     </div>
@@ -63,46 +76,102 @@
             <div class="card">
                     <div class="card-header">Add Train</div>
                     <div class="card-body">
-                        <form>
+                        <!-- <form> -->
                             <div class="form-group">
-                                <label for="search-input">Train Name</label>
+                                <label for="train-name-input">Train Name</label>
                                 <input type="text" class="form-control" id="train-name-input" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="records-input">Distanation</label>
-                                <input type="text" class="form-control" id="distanation-input" placeholder="">
+                                <label for="train-destanation-input">Destanation</label>
+                                <input type="text" class="form-control" id="train-destanation-input" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="time-input">Time Input</label>
-                                <input type="text" class="form-control" id="time-input" placeholder="">
+                                <label for="train-time-input">Train time</label>
+                                <input type="time" class="form-control" id="train-time-input" value="00:00:00" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="frequency-input">Frequency</label>
-                                <input type="text" class="form-control" id="time-input" placeholder="">
+                                <label for="train-frequency-input">Frequency (minutes)</label>
+                                <input type="number" class="form-control" id="train-frequency-input" value="0" placeholder="">
                             </div>
-                            <button id="add-button" type="submit" class="btn btn-primary">Add</button>
-                       </form>
+                            <button id="submit" type="submit" class="btn btn-primary">Add</button>
+                       <!-- </form> -->
                    </div>
                </div>
         </div>
-       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+               
         <script type="text/javascript">
-
             var config = {
-                apiKey: "AIzaSyAeQ-LUwpHvgfmAMTH5twAPmeD82cIh_l0",
-                authDomain: "trainscheduler-1bc22.firebaseapp.com",
-                databaseURL: "https://trainscheduler-1bc22.firebaseio.com",
-                projectId: "trainscheduler-1bc22",
-                storageBucket: "trainscheduler-1bc22.appspot.com",
-                messagingSenderId: "1049638381051"
+                apiKey: "AIzaSyAnSeyAfxjKQRGgCTquEIWCRSx-jA5AHO4",
+                authDomain: "firstproject-bc505.firebaseapp.com",
+                databaseURL: "https://firstproject-bc505.firebaseio.com",
+                projectId: "firstproject-bc505",
+                storageBucket: "firstproject-bc505.appspot.com",
+                messagingSenderId: "813153264113"
             };
             firebase.initializeApp(config);
 
+            var database = firebase.database();
+        
+//             var trainName = "";
+//             var destination = "";
+//             var startTime = "";
+//             var frequency = 0;
+
+            
+            // function currentTime() {
+            //     var current = moment().format('LT');
+            //     $("#time").html(current);
+            //     setTimeout(currentTime, 1000);
+            //     };
+
+        // Onclick function
+
+        $("#submit").on("click", function(event) {
+            
+            var trainNameInput = $("#train-name-input").val().trim();
+            var trainDestanationInput = $("#train-destanation-input").val().trim();
+            var trainTimeInput = $("#train-time-input").val().trim();
+            var trainFrequencyInput = $("#train-frequency-input").val().trim();
+ 
+            addInfoToFirebase(trainNameInput, trainDestanationInput, trainTimeInput, trainFrequencyInput);
+            addInfoToTable(trainNameInput, trainDestanationInput, trainTimeInput, trainFrequencyInput);
+        });
+
+        function addInfoToFirebase(nameVal, destinationVal, timeVal, frequencyVal) {
+            var rootRef = database.ref();
+            var trainsRef = rootRef.child("apps/trains");
+            
+            database.ref().set( {
+                name: nameVal,
+                destanation: destinationVal,
+                time: timeVal,
+                frequency: frequencyVal
+            });
+        }
+                      
+        function addInfoToTable(name, destination, time, frequency) {
+                // Create a new table row element
+            var tRow = $("<tr>");
+
+                // Methods run on jQuery selectors return the selector they we run on
+                // This is why we can create and save a reference to a td in the same statement we update its text
+            var trainNameTd = $("<td>").text(name);
+            var trainDestinationTd = $("<td>").text(destination);
+            var trainTimeTd = $("<td>").text(time);
+            var trainFrequencyTd = $("<td>").text(frequency);
+                    
+                // Append the newly created table data to the table row
+            tRow.append(trainNameTd, trainDestinationTd, trainTimeTd, trainFrequencyTd);
+                // Append the table row to the table body
+            $("tbody").append(tRow);
+        };
+
+        function loadAllTrains() {
 
 
+        }
 
+        loadAllTrains();
 
         </script>
 
