@@ -1,19 +1,20 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Train Schedule</title>
-        <!-- jQuery -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-        <!-- Bootstrap CDN-->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<head>
+    <meta charset="utf-8">
+    <title>Train Schedule</title>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-        <!-- Firebase Reference -->
-        <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
-        <link href="https://fonts.googleapis.com/css?family=Patua+One" rel="stylesheet">
-        <style>
+    <!-- Bootstrap CDN-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <!-- Firebase Reference -->
+    <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Patua+One" rel="stylesheet">
+    <style>
         h1 {
             text-align: center;
             font-size: 48px;
@@ -45,96 +46,92 @@
             width: 25%;
         }
         </style>
-    </head>
+</head>
 
-    <body>
-        <div class="container">
+<body>
+    <div class="container">
 
-            <div class="jumbotron"><h1>NorthWest Train Schedule</h1></div>
-
-            <div class="card">
-                <div class="card-header">Train Schedule</div>
-                <div class="card-body">
-                    <div id="train-schedule">                           
-                        <table class="table" id="train-table">
-                            <thead>
-                                <tr>
-                                    <th scope="col" id="name">Train Name</th>
-                                    <th scope="col" id="destination">Destination</th>
-                                    <th scope="col" id="time">Next Arrival</th>
-                                    <th scope="col" id="friquency">Frequency (minutes)</th>
-                                    <th scope="col" id="away">Minutes Away</th>
-                                    <th scope="col" id="delete">Delete</th>
-                                </tr>
-                            </thead>
-                                <tbody id="table-data"></tbody>
-                        </table>                    
-                    </div>
-                </div>                
-            </div>
-
-            <div class="card">
-                    <div class="card-header">Add Train</div>
-                    <div class="card-body">
-                        <!-- <form> -->
-                            <div class="form-group">
-                                <label for="train-name-input">Train Name</label>
-                                <input type="text" class="form-control" id="train-name-input" placeholder="">
-                            </div>
-                            <div class="form-group">
-                                <label for="train-destanation-input">Destanation</label>
-                                <input type="text" class="form-control" id="train-destanation-input" placeholder="">
-                            </div>
-                            <div class="form-group">
-                                <label for="train-time-input">Train time</label>
-                                <input type="time" class="form-control" id="train-time-input" value="00:00:00" placeholder="">
-                            </div>
-                            <div class="form-group">
-                                <label for="train-frequency-input">Frequency (minutes)</label>
-                                <input type="number" class="form-control" id="train-frequency-input" value="0" placeholder="">
-                            </div>
-                            <button id="submit" type="submit" class="btn btn-primary">Add</button>
-                       <!-- </form> -->
-                   </div>
-               </div>
+        <div class="jumbotron">
+            <h1>NorthWest Train Schedule</h1>
         </div>
-               
-        <script type="text/javascript">
-            var config = {
-                apiKey: "AIzaSyAnSeyAfxjKQRGgCTquEIWCRSx-jA5AHO4",
-                authDomain: "firstproject-bc505.firebaseapp.com",
-                databaseURL: "https://firstproject-bc505.firebaseio.com",
-                projectId: "firstproject-bc505",
-                storageBucket: "firstproject-bc505.appspot.com",
-                messagingSenderId: "813153264113"
-            };
-            firebase.initializeApp(config);
 
-            var database = firebase.database();
-        
-//             var trainName = "";
-//             var destination = "";
-//             var startTime = "";
-//             var frequency = 0;
+        <div class="card">
+            <div class="card-header">Train Schedule</div>
+            <div class="card-body">
+                <div id="train-schedule">
+                    <table class="table" id="train-table">
+                        <thead>
+                            <tr>
+                                <th scope="col" id="name">Train Name</th>
+                                <th scope="col" id="destination">Destination</th>
+                                <th scope="col" id="friquency">Frequency (minutes)</th>
+                                <th scope="col" id="friquency">Next arrival</th>
+                                <th scope="col" id="away">Minutes Away</th>
+                                <th scope="col" id="delete">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-data"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-            
-            // function currentTime() {
-            //     var current = moment().format('LT');
-            //     $("#time").html(current);
-            //     setTimeout(currentTime, 1000);
-            //     };
+        <div class="card">
+            <div class="card-header">Add Train</div>
+            <div class="card-body">
+                <!-- <form> -->
+                <div class="form-group">
+                    <label for="train-name-input">Train Name</label>
+                    <input type="text" class="form-control" id="train-name-input" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="train-destanation-input">Destanation</label>
+                    <input type="text" class="form-control" id="train-destanation-input" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="train-time-input">First Train time</label>
+                    <input type="time" class="form-control" id="train-time-input" value="00:00:00" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="train-frequency-input">Frequency (minutes)</label>
+                    <input type="number" class="form-control" id="train-frequency-input" value="0" placeholder="">
+                </div>
+                <button id="submit" type="submit" class="btn btn-primary">Add</button>
+                <!-- </form> -->
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var config = {
+            apiKey: "AIzaSyAnSeyAfxjKQRGgCTquEIWCRSx-jA5AHO4",
+            authDomain: "firstproject-bc505.firebaseapp.com",
+            databaseURL: "https://firstproject-bc505.firebaseio.com",
+            projectId: "firstproject-bc505",
+            storageBucket: "firstproject-bc505.appspot.com",
+            messagingSenderId: "813153264113"
+        };
+        firebase.initializeApp(config);
+
+        var database = firebase.database();
+
+        // function currentTime() {
+        //     var current = moment().format('LT');
+        //     $("#time").html(current);
+        //     setTimeout(currentTime, 1000);
+        //     };
 
         // Onclick function
 
-        $("#submit").on("click", function(event) {
-            
+        $("#submit").on("click", function (event) {
+
             var trainNameInput = $("#train-name-input").val().trim();
             var trainDestanationInput = $("#train-destanation-input").val().trim();
-            var trainTimeInput = $("#train-time-input").val().trim();
+            var trainTimeInput = $("#train-time-input").val();
             var trainFrequencyInput = $("#train-frequency-input").val().trim();
- 
+
             addInfoToFirebase(trainNameInput, trainDestanationInput, trainTimeInput, trainFrequencyInput);
-            addInfoToTable(trainNameInput, trainDestanationInput, trainTimeInput, trainFrequencyInput);
+            loadAllTrains();
         });
 
         function addInfoToFirebase(nameVal, destinationVal, timeVal, frequencyVal) {
@@ -148,32 +145,63 @@
                 frequency: frequencyVal
             })
         }
-                      
+
+        function getNextArrival(time, frequency) {
+            var currentTime = new Date($.now());
+
+            return currentTime.getHours() + ":" + currentTime.getMinutes();
+        }
+
+        function getMinAway(time, frequency) {
+            return 0;
+        }
+
         function addInfoToTable(name, destination, time, frequency) {
-                // Create a new table row element
+
+            var nextArrivalTime = getNextArrival(time, frequency);
+            var minAway = getMinAway(time, frequency);
+
+            var currentTime = new Date($.now());
+
+
+            // Create a new table row element
             var tRow = $("<tr>");
 
-                // Methods run on jQuery selectors return the selector they we run on
-                // This is why we can create and save a reference to a td in the same statement we update its text
+            // Methods run on jQuery selectors return the selector they we run on
+            // This is why we can create and save a reference to a td in the same statement we update its text
             var trainNameTd = $("<td>").text(name);
             var trainDestinationTd = $("<td>").text(destination);
-            var trainTimeTd = $("<td>").text(time);
             var trainFrequencyTd = $("<td>").text(frequency);
-                    
-                // Append the newly created table data to the table row
-            tRow.append(trainNameTd, trainDestinationTd, trainTimeTd, trainFrequencyTd);
-                // Append the table row to the table body
+            var trainNextArrivalTd = $("<td>").text(nextArrivalTime);
+            var trainMinsAwayTd = $("<td>").text(minAway);
+
+            // Append the newly created table data to the table row
+            tRow.append(trainNameTd, trainDestinationTd, trainFrequencyTd, trainNextArrivalTd, trainMinsAwayTd);
+            // Append the table row to the table body
             $("tbody").append(tRow);
         };
 
         function loadAllTrains() {
+            $("tbody").empty();
 
+            var trainsRef = database.ref("apps/trains");
 
+            trainsRef.once("value")
+                .then(function (snapshot) {
+                    snapshot.forEach(function (childSnapshot) {
+                        var key = childSnapshot.key;
+                        var childData = childSnapshot.val();
+
+                        console.log(childData);
+                        addInfoToTable(childData.name, childData.destanation, childData.time, childData.frequency);
+                    });
+                });
         }
 
         loadAllTrains();
 
-        </script>
+    </script>
 
-    </body>
+</body>
+
 </html>
