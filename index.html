@@ -140,13 +140,13 @@
         function addInfoToFirebase(nameVal, destinationVal, timeVal, frequencyVal) {
             var rootRef = database.ref();
             var trainsRef = rootRef.child("apps/trains");
-            
-            database.ref().set( {
+            var newTrainInfo = trainsRef.push();
+            newTrainInfo.set({
                 name: nameVal,
                 destanation: destinationVal,
                 time: timeVal,
                 frequency: frequencyVal
-            });
+            })
         }
                       
         function addInfoToTable(name, destination, time, frequency) {
